@@ -19,7 +19,7 @@
         $Note = $_POST['Note'];
         $StartDate = $_POST['StartDate'];
         $ExpiryDate = $_POST['ExpiryDate'];
-        $sql=sprintf("INSERT INTO %s VALUES (%s)","menu(Ssn,Name,Price,Note,ImgName,ImgDir,StartDate,ExpiryDate)"
+        $sql=sprintf("INSERT INTO %s VALUES (%s);","menu(Ssn,Name,Price,Note,ImgName,ImgDir,StartDate,ExpiryDate)"
             ,"'$Ssn','$MealName',$Price,'$Note','$ImgName','$ImgDir','$StartDate','$ExpiryDate'");
         if(mysqli_query($conn,$sql)){
             echo "<script>alert('新增餐點成功！');window.location.href='./editmenu.php';</script>"; 

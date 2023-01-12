@@ -34,7 +34,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">CANELE'</a>
+                <a class="navbar-brand" href="./index.php">CANELE'</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -69,12 +69,12 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="justify-content-center"><!--row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4-->
-                    <form class="row gx-4" method="post" action="" onSubmit="return validateNewMealForm();">
+                    <form class="row gx-4" method="post" action="./neworder.php">
                         <div class="col-12">
                             <label for="Title" class="col-form-label"><h4 class="fw-bold">購物車<h4></label>
                         </div>
                         <?php showcart($conn); ?>
-
+                        <div class="col-12"><hr></hr></div>
                         <div class="col-12 py-3"></div>
                         <div class="col-12">
                             <label for="OrderNote" class="form-label">訂單備註</label>
@@ -82,11 +82,11 @@
                         </div>
                         <div class="col-4">
                             <label for="Recipient" class="form-label">自取人/收件人</label>
-                            <input name="Recipient" type="text" class="form-control" id="Recipient" pattern="[1-9][0-9]{2}">
+                            <input name="Recipient" type="text" class="form-control" id="Recipient">
                         </div>
                         <div class="col-4">
                             <label for="Phone" class="form-label">連絡電話</label>
-                            <input name="Phone" type="text" class="form-control" id="Phone">
+                            <input name="Phone" type="text" class="form-control" id="Phone" pattern="[0-9]{10}">
                         </div>
                         <div class="col-4">
                             <label for="OrderForm" class="form-label">自取/宅配</label>
@@ -107,9 +107,7 @@
                                 <option value="2">14-18時</option>
                             </select>
                         </div>
-                        <div class="col-4">
-                            
-                        </div>
+                        
                         <div class="col-2">
                             <label for="ZipCode" class="form-label">郵遞區號</label>
                             <input name="ZipCode" type="text" class="form-control" id="ZipCode" pattern="[1-9][0-9]{2}">
