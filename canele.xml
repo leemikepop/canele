@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.2.0
+- https://www.phpmyadmin.net
+-
+- 主機： 127.0.0.1
+- 產生時間： 2023-01-12 17:04:31
+- 伺服器版本： 10.4.27-MariaDB
+- PHP 版本： 8.2.0
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="canele" collation="utf8mb4_unicode_ci" charset="utf8mb4">
+            <pma:table name="closeddate">
+                CREATE TABLE `closeddate` (
+                  `Date` date NOT NULL,
+                  `Closed` tinyint(1) NOT NULL DEFAULT 0,
+                  PRIMARY KEY (`Date`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="customer">
+                CREATE TABLE `customer` (
+                  `CustomerId` mediumint(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
+                  `CustomerName` varchar(100) NOT NULL,
+                  `Email` varchar(100) NOT NULL,
+                  `Phone` char(10) NOT NULL,
+                  `Password` varchar(100) NOT NULL,
+                  `Status` varchar(10) NOT NULL DEFAULT &#039;ACTIVE&#039;,
+                  PRIMARY KEY (`CustomerId`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="menu">
+                CREATE TABLE `menu` (
+                  `MealId` smallint(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
+                  `Ssn` char(10) DEFAULT NULL,
+                  `Name` varchar(100) NOT NULL,
+                  `Price` smallint(5) unsigned NOT NULL DEFAULT 0,
+                  `Note` text DEFAULT NULL,
+                  `ImgName` varchar(255) NOT NULL,
+                  `ImgDir` varchar(255) NOT NULL,
+                  `StartDate` date NOT NULL DEFAULT &#039;2001-01-01&#039;,
+                  `ExpiryDate` date NOT NULL DEFAULT &#039;3000-12-31&#039;,
+                  `CreatedTS` timestamp NOT NULL DEFAULT current_timestamp(),
+                  `UpdatedTS` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+                  PRIMARY KEY (`MealId`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="ordermenu">
+                CREATE TABLE `ordermenu` (
+                  `OrderId` mediumint(8) unsigned zerofill NOT NULL,
+                  `MealId` smallint(5) unsigned zerofill NOT NULL,
+                  `NumOfMeal` smallint(5) unsigned NOT NULL,
+                  PRIMARY KEY (`OrderId`,`MealId`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="orders">
+                CREATE TABLE `orders` (
+                  `OrderId` mediumint(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
+                  `CustomerId` mediumint(8) unsigned zerofill NOT NULL,
+                  `Type` char(1) NOT NULL COMMENT &#039;A:自取|B:宅配&#039;,
+                  `Note` text DEFAULT NULL,
+                  `OrderStatus` varchar(20) NOT NULL DEFAULT &#039;NEW&#039; COMMENT &#039;NEW|FAILED|ACCEPT|PLACING|DELIVERYING|COMPLITED|CANCELLED&#039;,
+                  `PayStatus` varchar(20) NOT NULL DEFAULT &#039;UNPAID&#039; COMMENT &#039;UNPAID|FAIL|OVERTIME|PAID|REFUNDING|REFUND&#039;,
+                  `CreatedTS` timestamp NOT NULL DEFAULT current_timestamp(),
+                  `AcceptedTS` timestamp NULL DEFAULT NULL,
+                  `DeliverdTS` timestamp NULL DEFAULT NULL,
+                  `CompletedTS` timestamp NULL DEFAULT NULL,
+                  PRIMARY KEY (`OrderId`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="owner">
+                CREATE TABLE `owner` (
+                  `Ssn` char(10) NOT NULL,
+                  `Name` varchar(100) DEFAULT NULL,
+                  `Position` varchar(100) DEFAULT NULL,
+                  `Password` varchar(100) NOT NULL,
+                  `Status` varchar(10) NOT NULL DEFAULT &#039;ACTIVE&#039;,
+                  PRIMARY KEY (`Ssn`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="shipmentinfo">
+                CREATE TABLE `shipmentinfo` (
+                  `OrderId` mediumint(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
+                  `Recipient` varchar(20) NOT NULL,
+                  `Phone` char(10) NOT NULL,
+                  `Date` date NOT NULL,
+                  `ShippingTime` char(1) DEFAULT &#039;4&#039; COMMENT &#039;1:13時前|2:14-18時|4:不指定&#039;,
+                  `ZipCode` char(3) DEFAULT NULL,
+                  `Address` varchar(100) DEFAULT NULL,
+                  `ShipNote` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+                  PRIMARY KEY (`OrderId`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - 資料庫： 'canele'
+    -->
+    <database name="canele">
+        <!-- 資料表 closeddate -->
+        <table name="closeddate">
+            <column name="Date">2022-12-02</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-03</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-04</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-09</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-10</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-11</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-16</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-17</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-18</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-23</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-24</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-25</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-30</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2022-12-31</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-01</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-02</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-06</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-07</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-08</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-09</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-13</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-14</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-15</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-16</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-20</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-21</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-22</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-23</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-27</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-28</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-29</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-01-30</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-03</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-04</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-05</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-06</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-10</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-11</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-12</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-13</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-17</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-18</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-19</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-20</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-24</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-25</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-26</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-02-27</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-03</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-04</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-05</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-06</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-10</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-11</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-12</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-13</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-17</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-18</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-19</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-20</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-24</column>
+            <column name="Closed">0</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-25</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-26</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-27</column>
+            <column name="Closed">1</column>
+        </table>
+        <table name="closeddate">
+            <column name="Date">2023-03-31</column>
+            <column name="Closed">0</column>
+        </table>
+        <!-- 資料表 customer -->
+        <table name="customer">
+            <column name="CustomerId">00000001</column>
+            <column name="CustomerName">李銘峰</column>
+            <column name="Email">leemikepop@gmail.com</column>
+            <column name="Phone">0988315452</column>
+            <column name="Password">1234</column>
+            <column name="Status">ACTIVE</column>
+        </table>
+        <table name="customer">
+            <column name="CustomerId">00000002</column>
+            <column name="CustomerName">裘斯淇</column>
+            <column name="Email">477@gmail.com</column>
+            <column name="Phone">0123456789</column>
+            <column name="Password">1234</column>
+            <column name="Status">ACTIVE</column>
+        </table>
+        <!-- 資料表 menu -->
+        <table name="menu">
+            <column name="MealId">00001</column>
+            <column name="Ssn">L125719117</column>
+            <column name="Name">原味可麗露</column>
+            <column name="Price">60</column>
+            <column name="Note">本產品含有可可脂</column>
+            <column name="ImgName">Original.jpg</column>
+            <column name="ImgDir">./Images/Original.jpg</column>
+            <column name="StartDate">2023-01-02</column>
+            <column name="ExpiryDate">2033-12-31</column>
+            <column name="CreatedTS">2023-01-12 13:33:02</column>
+            <column name="UpdatedTS">2023-01-12 13:33:59</column>
+        </table>
+        <table name="menu">
+            <column name="MealId">00002</column>
+            <column name="Ssn">L125719117</column>
+            <column name="Name">焦糖可麗露</column>
+            <column name="Price">65</column>
+            <column name="Note"></column>
+            <column name="ImgName">Caramel.jpg</column>
+            <column name="ImgDir">./Images/Caramel.jpg</column>
+            <column name="StartDate">2023-01-01</column>
+            <column name="ExpiryDate">2033-12-31</column>
+            <column name="CreatedTS">2023-01-12 13:33:33</column>
+            <column name="UpdatedTS">2023-01-12 13:33:33</column>
+        </table>
+        <table name="menu">
+            <column name="MealId">00003</column>
+            <column name="Ssn">L125719117</column>
+            <column name="Name">抹茶可麗露</column>
+            <column name="Price">65</column>
+            <column name="Note">使用日本靜岡抹茶</column>
+            <column name="ImgName">Matcha.jpg</column>
+            <column name="ImgDir">./Images/Matcha.jpg</column>
+            <column name="StartDate">2023-01-01</column>
+            <column name="ExpiryDate">2033-12-31</column>
+            <column name="CreatedTS">2023-01-12 13:34:34</column>
+            <column name="UpdatedTS">2023-01-12 13:34:34</column>
+        </table>
+        <table name="menu">
+            <column name="MealId">00004</column>
+            <column name="Ssn">L125719117</column>
+            <column name="Name">巧克力可麗露</column>
+            <column name="Price">65</column>
+            <column name="Note">本產品含有可可脂</column>
+            <column name="ImgName">Chocolate.jpg</column>
+            <column name="ImgDir">./Images/Chocolate.jpg</column>
+            <column name="StartDate">2023-01-01</column>
+            <column name="ExpiryDate">2033-12-31</column>
+            <column name="CreatedTS">2023-01-12 13:34:54</column>
+            <column name="UpdatedTS">2023-01-12 13:34:54</column>
+        </table>
+        <table name="menu">
+            <column name="MealId">00005</column>
+            <column name="Ssn">L125719117</column>
+            <column name="Name">草莓可麗露</column>
+            <column name="Price">65</column>
+            <column name="Note"></column>
+            <column name="ImgName">Strawberry.jpg</column>
+            <column name="ImgDir">./Images/Strawberry.jpg</column>
+            <column name="StartDate">2023-01-01</column>
+            <column name="ExpiryDate">2023-04-06</column>
+            <column name="CreatedTS">2023-01-12 13:35:55</column>
+            <column name="UpdatedTS">2023-01-12 13:35:55</column>
+        </table>
+        <!-- 資料表 ordermenu -->
+        <table name="ordermenu">
+            <column name="OrderId">00000003</column>
+            <column name="MealId">00001</column>
+            <column name="NumOfMeal">2</column>
+        </table>
+        <table name="ordermenu">
+            <column name="OrderId">00000003</column>
+            <column name="MealId">00002</column>
+            <column name="NumOfMeal">5</column>
+        </table>
+        <table name="ordermenu">
+            <column name="OrderId">00000003</column>
+            <column name="MealId">00004</column>
+            <column name="NumOfMeal">4</column>
+        </table>
+        <table name="ordermenu">
+            <column name="OrderId">00000003</column>
+            <column name="MealId">00005</column>
+            <column name="NumOfMeal">3</column>
+        </table>
+        <table name="ordermenu">
+            <column name="OrderId">00000006</column>
+            <column name="MealId">00002</column>
+            <column name="NumOfMeal">4</column>
+        </table>
+        <table name="ordermenu">
+            <column name="OrderId">00000006</column>
+            <column name="MealId">00003</column>
+            <column name="NumOfMeal">2</column>
+        </table>
+        <table name="ordermenu">
+            <column name="OrderId">00000006</column>
+            <column name="MealId">00005</column>
+            <column name="NumOfMeal">5</column>
+        </table>
+        <!-- 資料表 orders -->
+        <table name="orders">
+            <column name="OrderId">00000001</column>
+            <column name="CustomerId">00000001</column>
+            <column name="Type">A</column>
+            <column name="Note">這是訂單備註</column>
+            <column name="OrderStatus">FAILED</column>
+            <column name="PayStatus">UNPAID</column>
+            <column name="CreatedTS">2023-01-12 21:55:25</column>
+            <column name="AcceptedTS">NULL</column>
+            <column name="DeliverdTS">NULL</column>
+            <column name="CompletedTS">NULL</column>
+        </table>
+        <table name="orders">
+            <column name="OrderId">00000002</column>
+            <column name="CustomerId">00000001</column>
+            <column name="Type">A</column>
+            <column name="Note">這是訂單備註</column>
+            <column name="OrderStatus">FAILED</column>
+            <column name="PayStatus">UNPAID</column>
+            <column name="CreatedTS">2023-01-12 21:57:23</column>
+            <column name="AcceptedTS">NULL</column>
+            <column name="DeliverdTS">NULL</column>
+            <column name="CompletedTS">NULL</column>
+        </table>
+        <table name="orders">
+            <column name="OrderId">00000003</column>
+            <column name="CustomerId">00000001</column>
+            <column name="Type">A</column>
+            <column name="Note">這是訂單備註</column>
+            <column name="OrderStatus">NEW</column>
+            <column name="PayStatus">UNPAID</column>
+            <column name="CreatedTS">2023-01-12 22:00:51</column>
+            <column name="AcceptedTS">NULL</column>
+            <column name="DeliverdTS">NULL</column>
+            <column name="CompletedTS">NULL</column>
+        </table>
+        <table name="orders">
+            <column name="OrderId">00000004</column>
+            <column name="CustomerId">00000001</column>
+            <column name="Type">A</column>
+            <column name="Note">這是空訂單</column>
+            <column name="OrderStatus">FAILED</column>
+            <column name="PayStatus">UNPAID</column>
+            <column name="CreatedTS">2023-01-12 22:01:45</column>
+            <column name="AcceptedTS">NULL</column>
+            <column name="DeliverdTS">NULL</column>
+            <column name="CompletedTS">NULL</column>
+        </table>
+        <table name="orders">
+            <column name="OrderId">00000005</column>
+            <column name="CustomerId">00000001</column>
+            <column name="Type">A</column>
+            <column name="Note">這是空訂單</column>
+            <column name="OrderStatus">FAILED</column>
+            <column name="PayStatus">UNPAID</column>
+            <column name="CreatedTS">2023-01-12 22:04:33</column>
+            <column name="AcceptedTS">NULL</column>
+            <column name="DeliverdTS">NULL</column>
+            <column name="CompletedTS">NULL</column>
+        </table>
+        <table name="orders">
+            <column name="OrderId">00000006</column>
+            <column name="CustomerId">00000001</column>
+            <column name="Type">B</column>
+            <column name="Note">這是訂單備註</column>
+            <column name="OrderStatus">NEW</column>
+            <column name="PayStatus">UNPAID</column>
+            <column name="CreatedTS">2023-01-12 22:20:16</column>
+            <column name="AcceptedTS">NULL</column>
+            <column name="DeliverdTS">NULL</column>
+            <column name="CompletedTS">NULL</column>
+        </table>
+        <!-- 資料表 owner -->
+        <table name="owner">
+            <column name="Ssn">L125719117</column>
+            <column name="Name">root</column>
+            <column name="Position">系統開發者</column>
+            <column name="Password">root</column>
+            <column name="Status">ACTIVE</column>
+        </table>
+        <!-- 資料表 shipmentinfo -->
+        <table name="shipmentinfo">
+            <column name="OrderId">00000003</column>
+            <column name="Recipient">李銘峰</column>
+            <column name="Phone">0988315452</column>
+            <column name="Date">2023-01-17</column>
+            <column name="ShippingTime"></column>
+            <column name="ZipCode"></column>
+            <column name="Address"></column>
+            <column name="ShipNote"></column>
+        </table>
+        <table name="shipmentinfo">
+            <column name="OrderId">00000006</column>
+            <column name="Recipient">李銘峰</column>
+            <column name="Phone">0988315452</column>
+            <column name="Date">2023-01-18</column>
+            <column name="ShippingTime">4</column>
+            <column name="ZipCode">439</column>
+            <column name="Address">台南市東區長榮路二段32巷46弄81號</column>
+            <column name="ShipNote">這是宅配備註</column>
+        </table>
+    </database>
+</pma_xml_export>

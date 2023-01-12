@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-01-12 10:30:17
--- 伺服器版本： 10.4.25-MariaDB
--- PHP 版本： 8.0.23
+-- 產生時間： 2023-01-12 15:54:13
+-- 伺服器版本： 10.4.27-MariaDB
+-- PHP 版本： 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -98,11 +98,11 @@ INSERT INTO `closeddate` (`Date`, `Closed`) VALUES
 
 CREATE TABLE `customer` (
   `CustomerId` mediumint(8) UNSIGNED ZEROFILL NOT NULL,
-  `CustomerName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Phone` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Status` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ACTIVE'
+  `CustomerName` varchar(100) NOT NULL,
+  `Email` varchar(100) NOT NULL,
+  `Phone` char(10) NOT NULL,
+  `Password` varchar(100) NOT NULL,
+  `Status` varchar(10) NOT NULL DEFAULT 'ACTIVE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -121,12 +121,12 @@ INSERT INTO `customer` (`CustomerId`, `CustomerName`, `Email`, `Phone`, `Passwor
 
 CREATE TABLE `menu` (
   `MealId` smallint(5) UNSIGNED ZEROFILL NOT NULL,
-  `Ssn` char(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Ssn` char(10) DEFAULT NULL,
+  `Name` varchar(100) NOT NULL,
   `Price` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
-  `Note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ImgName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ImgDir` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Note` text DEFAULT NULL,
+  `ImgName` varchar(255) NOT NULL,
+  `ImgDir` varchar(255) NOT NULL,
   `StartDate` date NOT NULL DEFAULT '2001-01-01',
   `ExpiryDate` date NOT NULL DEFAULT '3000-12-31',
   `CreatedTS` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -151,10 +151,23 @@ INSERT INTO `menu` (`MealId`, `Ssn`, `Name`, `Price`, `Note`, `ImgName`, `ImgDir
 --
 
 CREATE TABLE `ordermenu` (
-  `OderId` char(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `OrderId` mediumint(8) UNSIGNED ZEROFILL NOT NULL,
   `MealId` smallint(5) UNSIGNED ZEROFILL NOT NULL,
-  `NumOfMeals` smallint(5) UNSIGNED NOT NULL
+  `NumOfMeal` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `ordermenu`
+--
+
+INSERT INTO `ordermenu` (`OrderId`, `MealId`, `NumOfMeal`) VALUES
+(00000003, 00001, 2),
+(00000003, 00002, 5),
+(00000003, 00004, 4),
+(00000003, 00005, 3),
+(00000006, 00002, 4),
+(00000006, 00003, 2),
+(00000006, 00005, 5);
 
 -- --------------------------------------------------------
 
@@ -163,17 +176,29 @@ CREATE TABLE `ordermenu` (
 --
 
 CREATE TABLE `orders` (
-  `OrderId` char(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `OrderId` mediumint(8) UNSIGNED ZEROFILL NOT NULL,
   `CustomerId` mediumint(8) UNSIGNED ZEROFILL NOT NULL,
-  `Type` char(1) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'A:自取|B:宅配',
-  `Note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `OrderStatus` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NEW' COMMENT 'NEW|ACCEPT|DELIVERYING|COMPLITED|CANCELLED',
-  `PayStatus` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '''UNPAID''' COMMENT 'UNPAID|FAIL|OVERTIME|PAID|REFUNDING|REFUND',
+  `Type` char(1) NOT NULL COMMENT 'A:自取|B:宅配',
+  `Note` text DEFAULT NULL,
+  `OrderStatus` varchar(20) NOT NULL DEFAULT 'NEW' COMMENT 'NEW|FAILED|ACCEPT|PLACING|DELIVERYING|COMPLITED|CANCELLED',
+  `PayStatus` varchar(20) NOT NULL DEFAULT 'UNPAID' COMMENT 'UNPAID|FAIL|OVERTIME|PAID|REFUNDING|REFUND',
   `CreatedTS` timestamp NOT NULL DEFAULT current_timestamp(),
   `AcceptedTS` timestamp NULL DEFAULT NULL,
   `DeliverdTS` timestamp NULL DEFAULT NULL,
   `CompletedTS` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `orders`
+--
+
+INSERT INTO `orders` (`OrderId`, `CustomerId`, `Type`, `Note`, `OrderStatus`, `PayStatus`, `CreatedTS`, `AcceptedTS`, `DeliverdTS`, `CompletedTS`) VALUES
+(00000001, 00000001, 'A', '這是訂單備註', 'FAILED', 'UNPAID', '2023-01-12 13:55:25', NULL, NULL, NULL),
+(00000002, 00000001, 'A', '這是訂單備註', 'FAILED', 'UNPAID', '2023-01-12 13:57:23', NULL, NULL, NULL),
+(00000003, 00000001, 'A', '這是訂單備註', 'NEW', 'UNPAID', '2023-01-12 14:00:51', NULL, NULL, NULL),
+(00000004, 00000001, 'A', '這是空訂單', 'FAILED', 'UNPAID', '2023-01-12 14:01:45', NULL, NULL, NULL),
+(00000005, 00000001, 'A', '這是空訂單', 'FAILED', 'UNPAID', '2023-01-12 14:04:33', NULL, NULL, NULL),
+(00000006, 00000001, 'B', '這是訂單備註', 'NEW', 'UNPAID', '2023-01-12 14:20:16', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -182,11 +207,11 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `owner` (
-  `Ssn` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Position` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Status` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ACTIVE'
+  `Ssn` char(10) NOT NULL,
+  `Name` varchar(100) DEFAULT NULL,
+  `Position` varchar(100) DEFAULT NULL,
+  `Password` varchar(100) NOT NULL,
+  `Status` varchar(10) NOT NULL DEFAULT 'ACTIVE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -203,14 +228,23 @@ INSERT INTO `owner` (`Ssn`, `Name`, `Position`, `Password`, `Status`) VALUES
 --
 
 CREATE TABLE `shipmentinfo` (
-  `OrderId` char(14) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Recipient` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Phone` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `OrderId` mediumint(8) UNSIGNED ZEROFILL NOT NULL,
+  `Recipient` varchar(20) NOT NULL,
+  `Phone` char(10) NOT NULL,
   `Date` date NOT NULL,
-  `ShippingTime` char(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '4' COMMENT '1:13時前|2:14-18時|4:不指定',
-  `ZipCode` char(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `ShippingTime` char(1) DEFAULT '4' COMMENT '1:13時前|2:14-18時|4:不指定',
+  `ZipCode` char(3) DEFAULT NULL,
+  `Address` varchar(100) DEFAULT NULL,
+  `ShipNote` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `shipmentinfo`
+--
+
+INSERT INTO `shipmentinfo` (`OrderId`, `Recipient`, `Phone`, `Date`, `ShippingTime`, `ZipCode`, `Address`, `ShipNote`) VALUES
+(00000003, '李銘峰', '0988315452', '2023-01-17', '', '', '', ''),
+(00000006, '李銘峰', '0988315452', '2023-01-18', '4', '439', '台南市東區長榮路二段32巷46弄81號', '這是宅配備註');
 
 --
 -- 已傾印資料表的索引
@@ -238,7 +272,7 @@ ALTER TABLE `menu`
 -- 資料表索引 `ordermenu`
 --
 ALTER TABLE `ordermenu`
-  ADD PRIMARY KEY (`OderId`,`MealId`);
+  ADD PRIMARY KEY (`OrderId`,`MealId`);
 
 --
 -- 資料表索引 `orders`
@@ -273,6 +307,18 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `menu`
   MODIFY `MealId` smallint(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `OrderId` mediumint(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `shipmentinfo`
+--
+ALTER TABLE `shipmentinfo`
+  MODIFY `OrderId` mediumint(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

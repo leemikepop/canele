@@ -1,6 +1,7 @@
 <?php
     include_once("./utilities.php");
     include_once("../page_utilities.php");
+    
 ?>
 
 <!DOCTYPE html>
@@ -11,39 +12,70 @@
         <meta name="description" content="" />
         <meta name="author" content="MingFeng,Li" />
         <title>首頁</title>
-        <!-- Favicon-->
-        <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
-        <!-- Bootstrap icons-->
+
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- <link href="bootstrap-3.0.0/dist/css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
-        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/sunny/jquery-ui.css">
+        <link rel="stylesheet" href="../../Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.css">
         <link href="../../css/styles.css" rel="stylesheet" />
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+        <script src="../../Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.js"></script>
     </head>
     <body>
         <!-- Navigation-->
         <?php
             show_nav();
+            getClosedDates($conn);
         ?>
         <!-- Header-->
-        <!-- <header class="bg-pink py-5">
-            <div class="container px-4 px-lg-5 my-5">
+        <header class="bg-pink py-1">
+            <div class="container px-1 px-lg-1 my-1">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">可露露甜品工作坊</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">可麗露專賣</p>
+                    <h4 class="display-6 fw-bolder">開始生產</h4>
                 </div>
             </div>
-        </header> -->
+        </header>
         <!-- Section-->
-        <section class="py-5">
-            
+        <section class="container-sm border border-2 rounded-3 py-5 my-5">
+            <form class="row gx-4" method="post" action="#">
+                <div class="col-6">
+                    <span class="">預計自取日期訂單<sub>隔日</sub></span>
+                    <input type="text" class="form-control" id="TakeDate">
+                </div>
+                <div class="col-6">
+                    <span class="">預計宅配收貨日期<sub>後天或下周二</sub></span>
+                    <input type="text" class="form-control" id="DiliveredDate">
+                </div>
+            </form>
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-pink">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; 可露露甜品工作坊 2023</p></div>
         </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script>
+            $(document).ready(function () {
+                var Cdates = $("#closedDates").text();
+                var CdatesArr = Cdates.split(";");
+                var DatesArr = [];
+                for(let i = 0; i < CdatesArr.length; i++){
+                    let date = new Date(CdatesArr[i]);
+                    DatesArr.push(date);
+                }
+                var today = new Date();
+                $("#TakeDate").multiDatesPicker({
+                    maxPicks:1,
+                    dateFormat: "yy-mm-dd",
+                    addDisabledDates:DatesArr,
+                });
+                $("#DiliveredDate").multiDatesPicker({
+                    maxPicks:1,
+                    dateFormat: "yy-mm-dd",
+                    addDisabledDates:DatesArr,
+                });
+            });
+        </script>
     </body>
 </html>
