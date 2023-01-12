@@ -74,9 +74,14 @@
                             <label for="Title" class="col-form-label"><h4 class="fw-bold">購物車<h4></label>
                         </div>
                         <?php showcart($conn); ?>
+
                         <div class="col-12 py-3"></div>
+                        <div class="col-12">
+                            <label for="OrderNote" class="form-label">訂單備註</label>
+                            <input name="OrderNote" type="text" class="form-control" id="OrderNote">
+                        </div>
                         <div class="col-4">
-                            <label for="Recipient" class="form-label">收件人</label>
+                            <label for="Recipient" class="form-label">自取人/收件人</label>
                             <input name="Recipient" type="text" class="form-control" id="Recipient" pattern="[1-9][0-9]{2}">
                         </div>
                         <div class="col-4">
@@ -113,6 +118,28 @@
                             <label for="Address" class="form-label">地址</label>
                             <input name="Address" type="text" class="form-control" id="Address">
                         </div>
+                        <div class="col-12">
+                            <label for="ShipNote" class="form-label">宅配備註</label>
+                            <input name="ShipNote" type="text" class="form-control" id="ShipNote">
+                        </div>
+                        <div class="col-4">                            
+                            <table class="table text-center mb-5">
+                                <thead>
+                                    <tr>
+                                        <th><label for="TotalPrice" class="form-label">總金額</label></th>
+                                        <th><label for="OrderPrice" class="form-label">訂單金額</label></th>
+                                        <th><label for="ShipPrice" class="form-label">運費金額</label></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input name="TotalPrice" type="text" class="form-control" id="TotalPrice" readonly></td>
+                                        <td><input name="OrderPrice" type="text" class="form-control" id="OrderPrice" readonly></td>
+                                        <td><input name="ShipPrice" type="text" class="form-control" id="ShipPrice" readonly></td>
+                                    </tr> 
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="col-12 py-5">
                             <button type="submit" class="btn btn-primary">送出訂單</button>
                             <button type="reset" class="btn btn-secondary">清除</button>
@@ -129,17 +156,49 @@
         
         <!-- Core theme JS-->
         <script>
+            $.fn.extend({
+                "calcTotalPrice":function(){
+                    var orderPrice = 0;
+                    $(".minusbtn").each(function(){
+                        let id = $(".minusbtn").data('key');
+                        let numid = "#Numid"+id;
+                        let priceid = "#Priceid"+id;
+                        orderPrice += $(numid).val()*$(priceid).val();
+                    });
+                    $("#OrderPrice").val(orderPrice);
+                }
+            })
             $(document).ready(function () {
                 $(".plusbtn").click(function(e){
-                    let numid = $(this).data('key');
+                    let id = $(this).data('key');
+                    let numid = "#Numid"+id;
                     $(numid).val(parseInt($(numid).val())+1);
+                    $().calcTotalPrice();
                 });
                 $(".minusbtn").click(function(e){
-                    let numid = $(this).data('key');
+                    let id = $(this).data('key');
+                    let numid = "#Numid"+id;
                     let num = parseInt($(numid).val());
                     if(num>0){
                         $(numid).val(num-1);
-                    }                    
+                    }
+                    $().calcTotalPrice();
+                });
+                $(".Num").change(function(){
+                    $().calcTotalPrice();
+                });
+                $("#OrderForm").change(function(){
+                    if($(this).val()=='A'){
+                        $("#ShippingTime").prop('disabled', true);
+                        $("#ZipCode").prop('disabled', true);
+                        $("#Address").prop('disabled', true);
+                        $("#ShipNote").prop('disabled', true);
+                    }else{
+                        $("#ShippingTime").prop('disabled', false);
+                        $("#ZipCode").prop('disabled', false);
+                        $("#Address").prop('disabled', false);
+                        $("#ShipNote").prop('disabled', false);
+                    }
                 });
                 var Cdates = $("#closedDates").text();
                 var CdatesArr = Cdates.split(";");

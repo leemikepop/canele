@@ -1,7 +1,7 @@
 <?php
-//define('DB_SERVER','172.19.2.1');
-define('DB_SERVER','192.168.0.108');
-define('DB_USERNAME','general');
+define('DB_SERVER','localhost');
+//define('DB_SERVER','192.168.0.108');
+define('DB_USERNAME','root');
 define('DB_PASSWORD','');
 define('DB_NAME','canele');
 

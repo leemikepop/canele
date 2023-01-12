@@ -110,9 +110,9 @@
                 echo '<div class="col-3">';
                     echo '<label for="Num" class="col-form-label">數量</label>';
                     echo '<div class="input-group">';
-                        echo '<button type="button" class="btn btn-secondary mx-1 minusbtn" data-key="#Numid'.$key.'">－</button>';                    
-                        echo '<input type="text" name="Num" class="form-control" id="Numid'.$key.'" pattern="[1-9][0-9]*|[0]" value="'.$value.'">';
-                        echo '<button type="button" class="btn btn-secondary mx-1 plusbtn" data-key="#Numid'.$key.'">＋</button>';
+                        echo '<button type="button" class="btn btn-secondary mx-1 minusbtn" data-key="'.$key.'">－</button>';                    
+                        echo '<input type="text" name="Num" class="form-control Num" id="Numid'.$key.'" pattern="[1-9][0-9]*|[0]" value="'.$value.'">';
+                        echo '<button type="button" class="btn btn-secondary mx-1 plusbtn" data-key="'.$key.'">＋</button>';
                     echo '</div>';
                 echo '</div>';
             }
