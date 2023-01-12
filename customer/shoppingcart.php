@@ -160,20 +160,29 @@
                 "calcTotalPrice":function(){
                     var orderPrice = 0;
                     $(".minusbtn").each(function(){
-                        let id = $(".minusbtn").data('key');
+                        let id = $(this).data('key');
                         let numid = "#Numid"+id;
                         let priceid = "#Priceid"+id;
                         orderPrice += $(numid).val()*$(priceid).val();
                     });
                     $("#OrderPrice").val(orderPrice);
+                    $("#TotalPrice").val(orderPrice+parseInt($("#ShipPrice").val()));
                 }
             })
             $(document).ready(function () {
+                $("#ShippingTime").prop('disabled', true);
+                $("#ZipCode").prop('disabled', true);
+                $("#Address").prop('disabled', true);
+                $("#ShipNote").prop('disabled', true);
+                $("#ShipPrice").val(0);
+                $().calcTotalPrice();
+                
                 $(".plusbtn").click(function(e){
                     let id = $(this).data('key');
                     let numid = "#Numid"+id;
                     $(numid).val(parseInt($(numid).val())+1);
                     $().calcTotalPrice();
+                    
                 });
                 $(".minusbtn").click(function(e){
                     let id = $(this).data('key');
@@ -181,8 +190,8 @@
                     let num = parseInt($(numid).val());
                     if(num>0){
                         $(numid).val(num-1);
-                    }
-                    $().calcTotalPrice();
+                        $().calcTotalPrice();
+                    }          
                 });
                 $(".Num").change(function(){
                     $().calcTotalPrice();
@@ -193,12 +202,15 @@
                         $("#ZipCode").prop('disabled', true);
                         $("#Address").prop('disabled', true);
                         $("#ShipNote").prop('disabled', true);
+                        $("#ShipPrice").val(0);
                     }else{
                         $("#ShippingTime").prop('disabled', false);
                         $("#ZipCode").prop('disabled', false);
                         $("#Address").prop('disabled', false);
                         $("#ShipNote").prop('disabled', false);
+                        $("#ShipPrice").val(180);
                     }
+                    $().calcTotalPrice();
                 });
                 var Cdates = $("#closedDates").text();
                 var CdatesArr = Cdates.split(";");

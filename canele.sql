@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-01-09 01:53:14
+-- 產生時間： 2023-01-12 10:30:17
 -- 伺服器版本： 10.4.25-MariaDB
 -- PHP 版本： 8.0.23
 
@@ -31,6 +31,64 @@ CREATE TABLE `closeddate` (
   `Date` date NOT NULL,
   `Closed` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `closeddate`
+--
+
+INSERT INTO `closeddate` (`Date`, `Closed`) VALUES
+('2022-12-02', 1),
+('2022-12-03', 1),
+('2022-12-04', 1),
+('2022-12-09', 1),
+('2022-12-10', 1),
+('2022-12-11', 1),
+('2022-12-16', 1),
+('2022-12-17', 1),
+('2022-12-18', 1),
+('2022-12-23', 1),
+('2022-12-24', 1),
+('2022-12-25', 1),
+('2022-12-30', 1),
+('2022-12-31', 1),
+('2023-01-01', 1),
+('2023-01-06', 1),
+('2023-01-07', 1),
+('2023-01-08', 1),
+('2023-01-13', 1),
+('2023-01-14', 1),
+('2023-01-15', 1),
+('2023-01-20', 1),
+('2023-01-21', 1),
+('2023-01-22', 1),
+('2023-01-27', 1),
+('2023-01-28', 1),
+('2023-01-29', 1),
+('2023-02-03', 0),
+('2023-02-04', 1),
+('2023-02-05', 1),
+('2023-02-10', 0),
+('2023-02-11', 1),
+('2023-02-12', 1),
+('2023-02-17', 0),
+('2023-02-18', 1),
+('2023-02-19', 1),
+('2023-02-24', 1),
+('2023-02-25', 1),
+('2023-02-26', 1),
+('2023-03-03', 1),
+('2023-03-04', 1),
+('2023-03-05', 1),
+('2023-03-10', 1),
+('2023-03-11', 1),
+('2023-03-12', 1),
+('2023-03-17', 1),
+('2023-03-18', 1),
+('2023-03-19', 1),
+('2023-03-24', 1),
+('2023-03-25', 1),
+('2023-03-26', 1),
+('2023-03-31', 1);
 
 -- --------------------------------------------------------
 
@@ -72,8 +130,19 @@ CREATE TABLE `menu` (
   `StartDate` date NOT NULL DEFAULT '2001-01-01',
   `ExpiryDate` date NOT NULL DEFAULT '3000-12-31',
   `CreatedTS` timestamp NOT NULL DEFAULT current_timestamp(),
-  `UpdatedTS` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `UpdatedTS` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `menu`
+--
+
+INSERT INTO `menu` (`MealId`, `Ssn`, `Name`, `Price`, `Note`, `ImgName`, `ImgDir`, `StartDate`, `ExpiryDate`, `CreatedTS`, `UpdatedTS`) VALUES
+(00001, 'L125719117', '原味可麗露', 60, '本產品含有可可脂', 'Original.jpg', './Images/Original.jpg', '2023-01-02', '2033-12-31', '2023-01-12 05:33:02', '2023-01-12 05:33:59'),
+(00002, 'L125719117', '焦糖可麗露', 65, '', 'Caramel.jpg', './Images/Caramel.jpg', '2023-01-01', '2033-12-31', '2023-01-12 05:33:33', '2023-01-12 05:33:33'),
+(00003, 'L125719117', '抹茶可麗露', 65, '使用日本靜岡抹茶', 'Matcha.jpg', './Images/Matcha.jpg', '2023-01-01', '2033-12-31', '2023-01-12 05:34:34', '2023-01-12 05:34:34'),
+(00004, 'L125719117', '巧克力可麗露', 65, '本產品含有可可脂', 'Chocolate.jpg', './Images/Chocolate.jpg', '2023-01-01', '2033-12-31', '2023-01-12 05:34:54', '2023-01-12 05:34:54'),
+(00005, 'L125719117', '草莓可麗露', 65, '', 'Strawberry.jpg', './Images/Strawberry.jpg', '2023-01-01', '2023-04-06', '2023-01-12 05:35:55', '2023-01-12 05:35:55');
 
 -- --------------------------------------------------------
 
@@ -119,6 +188,13 @@ CREATE TABLE `owner` (
   `Password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `Status` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ACTIVE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `owner`
+--
+
+INSERT INTO `owner` (`Ssn`, `Name`, `Position`, `Password`, `Status`) VALUES
+('L125719117', 'root', '系統開發者', 'root', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -196,7 +272,7 @@ ALTER TABLE `customer`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `MealId` smallint(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `MealId` smallint(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
