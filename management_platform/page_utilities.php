@@ -19,7 +19,7 @@
                         echo '<ul class="dropdown-menu" aria-labelledby="navbarDropdown">';
                         echo '<li><a class="dropdown-item" href="../manage/index.php">開始生產</a></li>';      
                         echo '<!-- <li><hr class="dropdown-divider" /></li> -->';
-                        echo '<li><a class="dropdown-item" href="#!">加工製造</a></li>';
+                        echo '<li><a class="dropdown-item" href="./produce.php">加工製造</a></li>';
                         echo '<li><a class="dropdown-item" href="#!">宅配出貨</a></li>';
                         echo '</ul>';
                     echo '</li>';

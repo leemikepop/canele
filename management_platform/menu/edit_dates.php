@@ -23,8 +23,12 @@
         }
         $OpenedtoClosed = array_diff($SDatesArr,$CdatesArr);
         foreach($OpenedtoClosed as $date){
-            $sql=sprintf("INSERT INTO %s VALUES %s;","closeddate(`Date`,`Closed`)","('$date','1')");
-            if(!mysqli_query($conn,$sql)){
+            $sql = sprintf("SELECT %s FROM %s WHERE %s;","*","closeddate","Date='$date'");
+            $r = mysqli_query($conn,$sql);
+            if(mysqli_num_rows($r)==0){
+                $sql=sprintf("INSERT INTO %s VALUES %s;","closeddate(`Date`,`Closed`)","('$date','1')");
+                mysqli_query($conn,$sql);
+            }else{
                 $sql=sprintf("UPDATE %s SET %s WHERE %s;","`closeddate`","Closed='1'","Date='$date' AND Closed='0'");
                 if(!mysqli_query($conn,$sql)){
                     echo "<script>alert('Ooops!O2C更新失敗！');</script>";

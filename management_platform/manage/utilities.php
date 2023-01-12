@@ -122,6 +122,7 @@
             }
         }
     }
+
     function showShipOrders($conn,$DiliveredDate){
         /*Ship orders*/
         $sql = sprintf("SELECT %s FROM %s WHERE %s;","*","shipmentinfo","Date='$DiliveredDate'");
@@ -224,4 +225,33 @@
         }
     }
     
+    function showFavorsNum($conn){
+        $sql = sprintf("SELECT %s FROM %s WHERE %s;","OrderId","orders","OrderStatus='ACCEPT'");
+        $result = mysqli_query($conn,$sql);
+        while($row=mysqli_fetch_assoc($result)){
+            $OrderId = $row['OrderId'];
+            $sql = sprintf("SELECT %s FROM %s WHERE %s;","MealId,NumOfMeal","ordermenu","OrderId='$OrderId'");
+            $getMealIdandNum = mysqli_query($conn,$sql);
+            while($rr = mysqli_fetch_assoc($getMealIdandNum)){
+                $MealId = $rr['MealId'];
+                $NumOfMeal = $rr['NumOfMeal'];
+                if(isset($_SESSION[$MealId])){
+                    $_SESSION[$MealId] = (int)$_SESSION[$MealId] + (int)$NumOfMeal;
+                }else{
+                    $_SESSION[$MealId] = (int)$NumOfMeal;
+                }   
+            }
+        }
+        $sql = sprintf("SELECT %s FROM %s;","MealId,Name","menu");
+        $getMeal = mysqli_query($conn,$sql);
+        while($row = mysqli_fetch_assoc($getMeal)){
+            $MealId = $row['MealId'];
+            $MealName = $row['Name'];
+            if(isset($_SESSION[$MealId])){
+                
+            }
+        }
+        
+    }
+
 ?>
