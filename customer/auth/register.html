@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>註冊</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../bootstrap-3.0.0/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/custom.css" rel="stylesheet" media="screen">
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="../../bootstrap-3.0.0/dist/js/bootstrap.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="bootstrap-3.0.0/assets/js/html5shiv.js"></script>
+      <script src="bootstrap-3.0.0/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        function validateForm() {
+            var x = document.forms["registerForm"]["Password"].value;
+            var y = document.forms["registerForm"]["PasswordCheck"].value;
+            if(x.length<4){
+                alert("密碼長度不足");
+                return false;
+            }
+            if (x != y) {
+                alert("請確認密碼是否輸入正確");
+                return false;
+            }
+        }
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+        <div class="logo">
+            <img src="./logo.jpg" alt="">
+        </div>
+        <div class="text-center mt-4 name">
+            可露露私房甜點工作坊
+        </div>
+        <form class="p-3 mt-3" name="registerForm" method="post" action="./register.php" onsubmit="return validateForm()">
+            姓名
+            <div class="form-field d-flex align-items-center">                
+                <span class="far fa-user"></span>
+                <input type="text" name="CustomerName" required>
+            </div>
+            E-mail
+            <div class="form-field d-flex align-items-center">
+                <span class="far fa-user"></span>
+                <input type="text" name="Email" required>
+            </div> 
+            手機號碼
+            <div class="form-field d-flex align-items-center">                
+                <span class="far fa-user"></span>
+                <input type="text" name="Phone" required>
+            </div>
+            密碼
+            <div class="form-field d-flex align-items-center">                
+                <span class="far fa-user"></span>
+                <input type="password" name="Password" required>
+            </div>
+            確認密碼    
+            <div class="form-field d-flex align-items-center">                
+                <span class="far fa-user"></span>
+                <input type="password" name="PasswordCheck" required>
+            </div>
+            <button class="btn mt-3" type="reset">清空</button>
+            <div>&emsp;</div>
+            <button class="btn mt-3">註冊</button>
+        </form>
+    </div>
+  </body>
+</html>
