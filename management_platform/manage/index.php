@@ -40,17 +40,21 @@
         </header>
         <!-- Section-->
         <section class="container-sm border border-2 rounded-3 py-5 my-5">
-            <form class="row gx-4" method="post" action="#">
+            <form class="row gx-4" method="post" action="./selectdates.php">
                 <div class="col-6">
                     <span class="">預計自取日期訂單<sub>隔日</sub></span>
-                    <input type="text" class="form-control" id="TakeDate">
+                    <input type="text" name="TakeDate" class="form-control" id="TakeDate">
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <span class="">預計宅配收貨日期<sub>後天或下周二</sub></span>
-                    <input type="text" class="form-control" id="DiliveredDate">
+                    <input type="text" name="DiliveredDate" class="form-control" id="DiliveredDate">
+                </div>
+                <div class="col-4">
+                    <button type="submit" class="btn btn-primary mx-1 searchbtn">查詢訂單</button>
                 </div>
             </form>
         </section>
+        <span id="OrderSections"></span>
         <!-- Footer-->
         <footer class="py-5 bg-pink">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; 可露露甜品工作坊 2023</p></div>
@@ -75,6 +79,22 @@
                     dateFormat: "yy-mm-dd",
                     addDisabledDates:DatesArr,
                 });
+                // $(".searchbtn").click(function(){
+                //     jQuery.ajax({
+                //     type: "POST",
+                //     url: 'your_functions_address.php',
+                //     dataType: 'json',
+                //     data: {TakeDate: $("#TakeDate").val(), DiliveredDate: $("#DiliveredDate").val()},
+                //     success: function (obj, textstatus) {
+                //                 if( !('error' in obj) ) {
+                //                     yourVariable = obj.result;
+                //                 }
+                //                 else {
+                //                     console.log(obj.error);
+                //                 }
+                //     }
+                //     });
+                // });
             });
         </script>
     </body>
